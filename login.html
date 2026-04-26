@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Healthcare Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f9d58, #34c38f, #e6f7ff);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container */
+.container {
+    display: flex;
+    width: 900px;
+    height: 520px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+}
+
+/* LEFT */
+.left {
+    width: 50%;
+    position: relative;
+}
+
+.left img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.left::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+}
+
+.quote {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: white;
+    font-size: 14px;
+}
+
+/* RIGHT */
+.right {
+    width: 50%;
+    background: rgba(255,255,255,0.97);
+    padding: 40px;
+}
+
+/* Title */
+.logo {
+    color: #0f9d58;
+    font-weight: bold;
+}
+
+h2 {
+    margin: 10px 0;
+}
+
+/* Input */
+.input-group {
+    position: relative;
+    margin-bottom: 15px;
+}
+
+.input-group i {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    color: #0f9d58;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 10px 35px 10px 35px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    border-color: #0f9d58;
+    box-shadow: 0 0 6px rgba(15,157,88,0.3);
+}
+
+/* Password toggle */
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    cursor: pointer;
+    color: #555;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(90deg, #0f9d58, #20c997);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background: linear-gradient(90deg, #0c7c46, #17a2b8);
+}
+
+/* Error */
+.error {
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    margin-top: 15px;
+}
+
+.footer a {
+    color: #0f9d58;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LEFT -->
+    <div class="left">
+        <img src="{{ url_for('static', filename='Loginimage.png') }}">
+        <div class="quote">
+            "AI-powered diagnosis for faster and accurate tumor detection."
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="right">
+
+        <div class="logo">🧠 HEALTHCARE AI</div>
+
+        <h2>Login</h2>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+
+        <!-- 🔥 UPDATED FORM -->
+        <form method="POST" action="{{ url_for('login') }}">
+
+            <!-- Email -->
+            <div class="input-group">
+                <i class="fa fa-envelope"></i>
+                <input type="email" name="email" placeholder="Email" required>
+            </div>
+
+            <!-- Password -->
+            <div class="input-group">
+                <i class="fa fa-lock"></i>
+                <input type="password" id="password" name="password" placeholder="Password" required>
+                <i class="fa fa-eye toggle-password" onclick="togglePassword()"></i>
+            </div>
+
+            <!-- 🔥 ROLE SELECT -->
+            <div class="input-group">
+                <i class="fa fa-user-tag"></i>
+                <select name="role" required>
+                    <option value="">Select Role</option>
+                    <option value="admin">Admin</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="patient">Patient</option>
+                </select>
+            </div>
+
+            <button type="submit">
+                <i class="fa fa-sign-in-alt"></i> Login
+            </button>
+        </form>
+
+        <div class="footer">
+            Don’t have an account?
+            <a href="{{ url_for('register') }}">Register</a>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+function togglePassword() {
+    let pass = document.getElementById("password");
+    pass.type = pass.type === "password" ? "text" : "password";
+}
+</script>
+
+</body>
+</html>
